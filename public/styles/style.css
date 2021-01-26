@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Roboto+Slab:wght@400;700&family=Roboto:ital,wght@0,400;0,700;1,400&display=swap');
+/* 
+font-family: 'Noto Serif', serif;
+font-family: 'Roboto', sans-serif;
+font-family: 'Roboto Slab', serif; */
+
+
+body {
+  margin: 10px;
+  display: grid;
+  place-items: center;
+  background-color: black;
+  color: white;
+  grid-template-columns: repeat(12, calc(100vw / 12));
+  grid-template-rows: repeat(10, 10vh);
+  width: 100vw;
+  height: 100vh;
+  font-family: 'Roboto Slab', serif;
+  font-size: 12pt;
+}
+
+.gridItem {
+  width: 92%;
+  height: 92%;
+}
+
+.header {
+  font-size: 24pt;
+  font-family: 'Roboto', sans-serif;
+  grid-column: 1 / span 4;
+}
+
+.text {
+  grid-column: 1 / span 5;
+  grid-row: 2 / span 2;
+}
+
+#latitude {
+  grid-column: 1 / span 5;
+  grid-row: 4 / span 2;
+}
+
+#longitude {
+  grid-column: 6 / span 5;
+  grid-row: 4 / span 2;
+}
