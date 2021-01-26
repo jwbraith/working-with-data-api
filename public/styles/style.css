@@ -11,7 +11,7 @@ body {
   place-items: center;
   background-color: black;
   color: white;
-  grid-template-columns: repeat(12, calc(100vw / 12));
+  grid-template-columns: repeat(8, calc(100vw / 8));
   grid-template-rows: repeat(10, 10vh);
   width: 100vw;
   height: 100vh;
@@ -43,4 +43,8 @@ body {
 #longitude {
   grid-column: 6 / span 5;
   grid-row: 4 / span 2;
+}
+
+#submit {
+  
 }
