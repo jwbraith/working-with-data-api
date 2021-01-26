@@ -18,3 +18,12 @@ app.post('/api', (req, res) => {
     longitude: req.body.lngi
   });
 })
+
+app.post('/clear', (req, res) => {
+  database.remove({}, { multi: true }, function (err, numRemoved) {
+
+  });
+  res.json({
+    status: "success"
+  })
+})

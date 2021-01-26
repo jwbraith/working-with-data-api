@@ -12,37 +12,47 @@
     <div class="gridItem header">
       Charlie's Web
     </div>
-    <div class="gridItem text">As soon as humanly possible I need you to run down to the store and find the biggest
-      basket of
-      bananas available. Also, they need to be as green as a frostbitten sun. Hmm?</div>
-    <div class="gridItem submit"><input type="button" value="Submit Details"></div>
+    <div class="gridItem button" id="clear"><input type="button" value="Clear Database" onclick="clear()"></div>
+    <div class="gridItem button" id="submit"><input type="button" value="Submit Details" onclick="submit()"></div>
     <div class="gridItem" id="latitude">Latitude: <span id="latVal"></span>&deg;</div>
     <div class="gridItem" id="longitude">Longitude: <span id="longVal"></span>&deg;</div>
 
     <script>
-      if ('geolocation' in navigator) {
-        console.log('geolocation available');
-        navigator.geolocation.getCurrentPosition(async position => {
-          const lat = position.coords.latitude;
-          document.getElementById('latVal').textContent = lat;
-          const lngi = position.coords.longitude;
-          document.getElementById('longVal').textContent = lngi;
+      function submit() {
+        if ('geolocation' in navigator) {
+          console.log('geolocation available');
+          navigator.geolocation.getCurrentPosition(async position => {
+            const lat = position.coords.latitude;
+            document.getElementById('latVal').textContent = lat;
+            const lngi = position.coords.longitude;
+            document.getElementById('longVal').textContent = lngi;
 
-          const data = { lat, lngi };
-          const options = {
-            method: 'POST',
-            headers: {
-              "Content-Type": 'application/json'
-            },
-            body: JSON.stringify(data)
+            const data = { lat, lngi };
+            const options = {
+              method: 'POST',
+              headers: {
+                "Content-Type": 'application/json'
+              },
+              body: JSON.stringify(data)
 
+            }
+            const response = await fetch('/api', options);
+            const jsondata = await response.json();
+            console.log(jsondata);
+          });
+        } else {
+          console.log('geolocation ont available');
+        }
+      }
+
+      function clear() {
+        const options = {
+          method: 'POST',
+          headers: {
+            "Content-Type": 'application/json'
           }
-          const response = await fetch('/api', options);
-          const jsondata = await response.json();
-          console.log(jsondata);
-        });
-      } else {
-        console.log('geolocation ont available');
+        }
+        fetch('/clear', options);
       }
     </script>
 
