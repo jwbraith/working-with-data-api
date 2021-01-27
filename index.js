@@ -9,16 +9,24 @@ const database = new Datastore('flanders.db');
 database.loadDatabase();
 
 app.post('/api', (req, res) => {
-  console.log("submit got to server");
+  const data = request.body;
   const timestamp = Date.now();
-  req.body.timestamp = timestamp;
-  database.insert(req.body);
-  res.json({
-    status: "success",
-    latitude: req.body.lat,
-    longitude: req.body.lngi
-  });
+  data.timestamp = timestamp;
+  database.insert(data);
+  res.json(data);
 })
+
+app.get('/api', (req, res) => {
+  database.find({}, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.end();
+    } else {
+      res.json(data);
+
+    }
+  });
+});
 
 app.post('/clear', (req, res) => {
   console.log(req.body);

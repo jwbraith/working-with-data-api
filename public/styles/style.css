@@ -6,7 +6,7 @@ font-family: 'Roboto Slab', serif; */
 
 
 body {
-  margin: 10px;
+  margin: 0px;
   display: grid;
   place-items: center;
   background-color: black;
@@ -31,7 +31,7 @@ body {
 .header {
   font-size: 24pt;
   font-family: 'Roboto', sans-serif;
-  grid-column: 1 / span 4;
+  grid-column: 1 / span 8;
 }
 
 .text {
