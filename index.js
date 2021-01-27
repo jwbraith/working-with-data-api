@@ -9,12 +9,12 @@ const database = new Datastore('flanders.db');
 database.loadDatabase();
 
 app.post('/api', (req, res) => {
-  const data = request.body;
+  const data = req.body;
   const timestamp = Date.now();
   data.timestamp = timestamp;
   database.insert(data);
   res.json(data);
-})
+});
 
 app.get('/api', (req, res) => {
   database.find({}, (err, data) => {
