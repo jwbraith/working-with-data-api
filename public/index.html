@@ -12,8 +12,10 @@
     <div class="gridItem header">
       Charlie's Web
     </div>
-    <div class="gridItem button" id="clear"><input type="button" value="Clear Database" onclick="clear()"></div>
     <div class="gridItem button" id="submit"><input type="button" value="Submit Details" onclick="submit()"></div>
+    <div class="gridItem button" id="clear">
+      <input type="button" value="Empty DB" onclick="emptyDB()">
+    </div>
     <div class="gridItem" id="latitude">Latitude: <span id="latVal"></span>&deg;</div>
     <div class="gridItem" id="longitude">Longitude: <span id="longVal"></span>&deg;</div>
 
@@ -45,14 +47,20 @@
         }
       }
 
-      function clear() {
+      function emptyDB() {
+        console.log("Clear got to client");
+        const cmd = { cmd: 'flush' };
+        console.log(cmd);
         const options = {
           method: 'POST',
           headers: {
             "Content-Type": 'application/json'
-          }
+          },
+          body: JSON.stringify(cmd)
         }
-        fetch('/clear', options);
+        fetch('/clear', options).then(response => response.json()).then(data => {
+          console.log('Success:', data);
+        });
       }
     </script>
 

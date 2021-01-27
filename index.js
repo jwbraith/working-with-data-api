@@ -9,6 +9,7 @@ const database = new Datastore('flanders.db');
 database.loadDatabase();
 
 app.post('/api', (req, res) => {
+  console.log("submit got to server");
   const timestamp = Date.now();
   req.body.timestamp = timestamp;
   database.insert(req.body);
@@ -20,10 +21,10 @@ app.post('/api', (req, res) => {
 })
 
 app.post('/clear', (req, res) => {
-  database.remove({}, { multi: true }, function (err, numRemoved) {
-
-  });
+  console.log(req.body);
+  console.log("clear button reached server");
+  database.remove({}, { multi: true }, function (err, numRemoved) { });
   res.json({
     status: "success"
-  })
+  });
 })
