@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Working with Data and API</title>
     <link rel="stylesheet" href="./styles/style.css">
+    <script src="./scripts/client.js"></script>
   </head>
 
   <body>
@@ -16,55 +17,11 @@
     <div class="gridItem" id="moodInput"><label for="mood"></label><input type="text" name="mood" id="moodInputBox"
         placeholder="Mood"></div>
     <div class="gridItem button" id="clear">
-      <input type="button" value="Empty DB" onclick="emptyDB()">
+      <a href="/check-ins">Check-ins</a>
     </div>
-    <div class="gridItem" id="latitude">Latitude: <span id="latVal"></span>&deg;</div>
-    <div class="gridItem" id="longitude">Longitude: <span id="longVal"></span>&deg;</div>
+    <div class="gridItem" id="latVal">Latitude: </div>
+    <div class="gridItem" id="longVal">Longitude: </div>
 
-    <script>
-      function submit() {
-        if ('geolocation' in navigator) {
-          console.log('geolocation available');
-          navigator.geolocation.getCurrentPosition(async position => {
-            const lat = position.coords.latitude;
-            document.getElementById('latVal').textContent = lat;
-            const lngi = position.coords.longitude;
-            document.getElementById('longVal').textContent = lngi;
-
-            const data = { lat, lngi };
-            const options = {
-              method: 'POST',
-              headers: {
-                "Content-Type": 'application/json'
-              },
-              body: JSON.stringify(data)
-
-            }
-            const response = await fetch('/api', options);
-            const jsondata = await response.json();
-            console.log(jsondata);
-          });
-        } else {
-          console.log('geolocation ont available');
-        }
-      }
-
-      function emptyDB() {
-        console.log("Clear got to client");
-        const cmd = { cmd: 'flush' };
-        console.log(cmd);
-        const options = {
-          method: 'POST',
-          headers: {
-            "Content-Type": 'application/json'
-          },
-          body: JSON.stringify(cmd)
-        }
-        fetch('/clear', options).then(response => response.json()).then(data => {
-          console.log('Success:', data);
-        });
-      }
-    </script>
 
   </body>
 

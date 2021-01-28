@@ -39,29 +39,29 @@ body {
   grid-row: 2 / span 2;
 }
 
-#latitude {
-  grid-column: 1 / span 5;
-  grid-row: 4 / span 2;
+#latVal {
+  grid-column: 1 / span 3;
+  grid-row: 3 / span 1;
 }
 
-#longitude {
-  grid-column: 6 / span 5;
-  grid-row: 4 / span 2;
+#longVal {
+  grid-column: 4 / span 3;
+  grid-row: 3 / span 1;
 }
 
 #submit {
-  grid-column: 1 / span 2;
+  grid-column: 1 / span 3;
   grid-row: 2;
 }
 
 #clear {
-  grid-column: 5 / span 2;
+  grid-column: 6 / span 2;
   grid-row: 2;
 }
 
 #moodInput {
   color: dimgray;
-  grid-column: 3 /span 2;
+  grid-column: 4 /span 2;
   grid-row: 2;
 }
 

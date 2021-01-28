@@ -20,14 +20,7 @@
         const response = await fetch('/api');
         const data = await response.json();
         console.log(data);
-        for (item of data) {
-          const root = document.createElement('div');
-          root.textContent = `location: ${item.lat}, ${item.lngi}`;
-          const date = document.createElement('div');
-          const dateString = new Date(item.timestamp).toLocaleDateString();
-          date.textContent = `Time: ${dateString}`;
-          document.body.append(root, date);
-        }
+
       }
     </script>
 

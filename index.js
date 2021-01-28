@@ -16,7 +16,7 @@ app.post('/api', (req, res) => {
   res.json(data);
 });
 
-app.get('/api', (req, res) => {
+app.get('/check-ins', (req, res) => {
   database.find({}, (err, data) => {
     if (err) {
       console.log(err);
@@ -36,3 +36,4 @@ app.post('/clear', (req, res) => {
     status: "success"
   });
 })
+
