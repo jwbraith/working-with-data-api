@@ -1,7 +1,10 @@
 const express = require('express');
 const app = express();
 const Datastore = require('nedb');
-app.listen(8000, () => console.log('Listening at 8000'));
+const port = 8000;
+app.listen(port, () => console.log(`Listening at ${port}`));
+
+
 app.use(express.static('public'));
 app.use(express.json({ limit: '1mb' }));
 

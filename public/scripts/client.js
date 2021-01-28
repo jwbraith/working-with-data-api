@@ -1,31 +1,42 @@
-function submit() {
-  if ('geolocation' in navigator) {
-    console.log('geolocation available');
-    navigator.geolocation.getCurrentPosition(async position => {
-      const lat = position.coords.latitude;
-      const latString = "Latitude: " + lat + "\u00B0";
-      document.getElementById('latVal').textContent = latString;
-      const lngi = position.coords.longitude;
-      const lngiString = "Longitude: " + lngi + "\u00B0";
-      document.getElementById('longVal').textContent = lngiString;
 
-      const data = { lat, lngi };
-      const options = {
-        method: 'POST',
-        headers: {
-          "Content-Type": 'application/json'
-        },
-        body: JSON.stringify(data)
+$(document).ready(function () {
+  $('#submit').on('click', () => {
+    // e.preventDefault();
+    if ('geolocation' in navigator) {
+      console.log('geolocation available');
+      navigator.geolocation.getCurrentPosition(async position => {
+        const lat = position.coords.latitude;
+        const latString = "Latitude: " + lat + "\u00B0";
+        const lngi = position.coords.longitude;
+        const lngiString = "Longitude: " + lngi + "\u00B0";
+        $("#latVal").text(latString);
+        $("#lngiVal").text(lngiString);
 
-      }
-      const response = await fetch('/api', options);
-      const jsondata = await response.json();
-      console.log(jsondata);
-    });
-  } else {
-    console.log('geolocation ont available');
-  }
-}
+
+        const posData = { lat, lngi };
+        $.ajax({
+          url: "/api",
+          dataType: "json",
+          type: "POST",
+          data: posData,
+          success: function (data) {
+            console.log("SUCCESS:", data);
+
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+
+            console.log("ERROR:", jqXHR, textStatus, errorThrown);
+          }
+
+        });
+      });
+    } else {
+      console.log('geolocation ont available');
+    }
+
+  })
+});
+
 
 function emptyDB() {
   console.log("Clear got to client");

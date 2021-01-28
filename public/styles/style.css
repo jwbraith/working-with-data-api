@@ -44,7 +44,7 @@ body {
   grid-row: 3 / span 1;
 }
 
-#longVal {
+#lngiVal {
   grid-column: 4 / span 3;
   grid-row: 3 / span 1;
 }
