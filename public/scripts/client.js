@@ -51,13 +51,32 @@ $(document).ready(function () {
       success: function (data) {
         console.log(data);
         for (item of data) {
-          $('body').append("<div class='gridItem'></div>");
+          $('body').append("<div class='gridItem' id='mood'></div>");
+          $('body').append("<div class='gridItem' id='latVal'></div>");
+          $('body').append("<div class='gridItem' id='lngiVal'></div>");
+          $('body').append("<div class='gridItem' id='date'></div>");
         }
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log("ERORO", jqXHR, textStatus, errorthrown);
       }
     })
+  });
+
+  $('#emptyDB').on('click', (voorval) => {
+    let cmd = 'flush';
+    $.ajax({
+      url: '/emptyDB',
+      dataType: 'json',
+      type: 'POST',
+      data: cmd,
+      success: function (data) {
+        console.log("Database flushed!");
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log("ERROR: ", jqXHR, textStatus, errorThrown);
+      }
+    });
   });
 });
 

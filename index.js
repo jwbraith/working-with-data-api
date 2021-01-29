@@ -31,7 +31,7 @@ app.get('/get-hist', (req, res) => {
   });
 });
 
-app.post('/clear', (req, res) => {
+app.post('/emptyDB', (req, res) => {
   console.log(req.body);
   console.log("clear button reached server");
   database.remove({}, { multi: true }, function (err, numRemoved) { });
