@@ -11,21 +11,36 @@ $(document).ready(function () {
         let lngi = position.coords.longitude;
         lngi = lngi.toFixed(4);
         let lngiString = "Longitude: " + lngi + "\u00B0";
+        let mood = $("#moodInputBox").val();
         let moodString = "Mood: " + $("#moodInputBox").val();
         $("#latVal").text(latString);
         $("#lngiVal").text(lngiString);
         $("#mood").text(moodString);
 
+        // get time in milliseconds since 1970
+        const timestamp = Date.now();
+        // make a date object from those milliseconds
 
-        const posData = { lat, lngi };
+        let dateString = new Date(timestamp).toLocaleDateString();
+        $('#date').text(dateString);
+
+        const posData = {
+          moodGiven: mood,
+          latitude: lat,
+          longitude: lngi,
+          dateGiven: timestamp
+        };
+        let strungData = JSON.stringify(posData);
+        console.log(strungData);
         $.ajax({
           url: "/api",
+          headers: {
+            'Content-Type': 'application/json'
+          },
           dataType: "json",
           type: "POST",
-          data: posData,
+          data: strungData,
           success: function (data) {
-            const dateString = new Date(data.timestamp).toLocaleDateString();
-            $('#date').text(dateString);
             console.log("SUCCESS:", data);
 
           },
@@ -51,10 +66,17 @@ $(document).ready(function () {
       success: function (data) {
         console.log(data);
         for (item of data) {
-          $('body').append("<div class='gridItem' id='mood'></div>");
-          $('body').append("<div class='gridItem' id='latVal'></div>");
-          $('body').append("<div class='gridItem' id='lngiVal'></div>");
-          $('body').append("<div class='gridItem' id='date'></div>");
+          let itemMood = item.moodGiven;
+          $('body').append(`<div class='gridItem mood'>Mood: ${itemMood}</div>`);
+          let itemLat = item.latitude;
+          let latString = "Latitude: " + itemLat + "\u00B0";
+          $('body').append(`<div class='gridItem latVal'>${latString}</div>`);
+          let itemLngi = item.longitude;
+          let lngiString = "Longitude: " + itemLngi + "\u00B0";
+          $('body').append(`<div class='gridItem lngiVal'>${lngiString}</div>`);
+          let itemDate = item.dateGiven;
+          let dateString = new Date(itemDate).toLocaleDateString();
+          $('body').append(`<div class='gridItem date'>${dateString}</div>`);
         }
       },
       error: function (jqXHR, textStatus, errorThrown) {
@@ -81,32 +103,3 @@ $(document).ready(function () {
 });
 
 
-function emptyDB() {
-  console.log("Clear got to client");
-  const cmd = { cmd: 'flush' };
-  console.log(cmd);
-  const options = {
-    method: 'POST',
-    headers: {
-      "Content-Type": 'application/json'
-    },
-    body: JSON.stringify(cmd)
-  }
-  fetch('/clear', options).then(response => response.json()).then(data => {
-    console.log('Success:', data);
-  });
-}
-
-async () => {
-  fetch('/check-ins').then(response => response.json()).then(data => {
-    console.log('Success:', data);
-    for (item of data) {
-      const root = document.createElement('div');
-      root.textContent = `location: ${item.lat}, ${item.lngi}`;
-      const date = document.createElement('div');
-      const dateString = new Date(item.timestamp).toLocaleDateString();
-      date.textContent = `Time: ${dateString}`;
-      document.body.append(root, date);
-    }
-  });
-}

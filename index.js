@@ -8,13 +8,13 @@ app.listen(port, () => console.log(`Listening at ${port}`));
 app.use(express.static('public'));
 app.use(express.json({ limit: '1mb' }));
 
+
 const database = new Datastore('flanders.db');
 database.loadDatabase();
 
 app.post('/api', (req, res) => {
-  const data = req.body;
-  const timestamp = Date.now();
-  data.timestamp = timestamp;
+  res.setHeader('Content-Type', 'application/json');
+  let data = req.body;
   database.insert(data);
   res.json(data);
 });
