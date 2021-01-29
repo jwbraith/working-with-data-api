@@ -19,7 +19,7 @@ app.post('/api', (req, res) => {
   res.json(data);
 });
 
-app.get('/check-ins', (req, res) => {
+app.get('/get-hist', (req, res) => {
   database.find({}, (err, data) => {
     if (err) {
       console.log(err);

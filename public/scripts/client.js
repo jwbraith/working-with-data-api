@@ -5,12 +5,16 @@ $(document).ready(function () {
     if ('geolocation' in navigator) {
       console.log('geolocation available');
       navigator.geolocation.getCurrentPosition(async position => {
-        const lat = position.coords.latitude;
-        const latString = "Latitude: " + lat + "\u00B0";
-        const lngi = position.coords.longitude;
-        const lngiString = "Longitude: " + lngi + "\u00B0";
+        let lat = position.coords.latitude;
+        lat = lat.toFixed(4);
+        let latString = "Latitude: " + lat + "\u00B0";
+        let lngi = position.coords.longitude;
+        lngi = lngi.toFixed(4);
+        let lngiString = "Longitude: " + lngi + "\u00B0";
+        let moodString = "Mood: " + $("#moodInputBox").val();
         $("#latVal").text(latString);
         $("#lngiVal").text(lngiString);
+        $("#mood").text(moodString);
 
 
         const posData = { lat, lngi };
@@ -20,6 +24,8 @@ $(document).ready(function () {
           type: "POST",
           data: posData,
           success: function (data) {
+            const dateString = new Date(data.timestamp).toLocaleDateString();
+            $('#date').text(dateString);
             console.log("SUCCESS:", data);
 
           },
@@ -35,6 +41,24 @@ $(document).ready(function () {
     }
 
   })
+
+  $('#displayHistory').on('click', (voorval) => {
+    voorval.preventDefault();
+    $.ajax({
+      url: "/get-hist",
+      dataType: "json",
+      type: "GET",
+      success: function (data) {
+        console.log(data);
+        for (item of data) {
+          $('body').append("<div class='gridItem'></div>");
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log("ERORO", jqXHR, textStatus, errorthrown);
+      }
+    })
+  });
 });
 
 
